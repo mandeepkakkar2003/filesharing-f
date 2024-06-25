@@ -15,7 +15,7 @@ const emailForm = document.querySelector("#emailForm");
 
 const toast = document.querySelector(".toast");
 
-const baseURL = "https://fileshairing-4.onrender.com"; // Updated base URL
+const baseURL = "https://filesharing-drzs.onrender.com"; // Updated base URL
 const uploadURL = `${baseURL}/api/files`;
 const emailURL = `${baseURL}/api/files/send`;
 
