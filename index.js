@@ -15,12 +15,11 @@ const emailForm = document.querySelector("#emailForm");
 
 const toast = document.querySelector(".toast");
 
-const baseURL = "https://innshare.herokuapp.com";
+const baseURL = "https://fileshairing-4.onrender.com"; // Updated base URL
 const uploadURL = `${baseURL}/api/files`;
 const emailURL = `${baseURL}/api/files/send`;
 
 const maxAllowedSize = 100 * 1024 * 1024; //100mb
-
 
 browseBtn.addEventListener("click", () => {
   fileInput.click();
@@ -28,7 +27,6 @@ browseBtn.addEventListener("click", () => {
 
 dropZone.addEventListener("drop", (e) => {
   e.preventDefault();
-  //   console.log("dropped", e.dataTransfer.files[0].name);
   const files = e.dataTransfer.files;
   if (files.length === 1) {
     if (files[0].size < maxAllowedSize) {
@@ -46,14 +44,10 @@ dropZone.addEventListener("drop", (e) => {
 dropZone.addEventListener("dragover", (e) => {
   e.preventDefault();
   dropZone.classList.add("dragged");
-
-  // console.log("dropping file");
 });
 
 dropZone.addEventListener("dragleave", (e) => {
   dropZone.classList.remove("dragged");
-
-  console.log("drag ended");
 });
 
 // file input change and uploader
@@ -66,7 +60,7 @@ fileInput.addEventListener("change", () => {
   uploadFile();
 });
 
-// sharing container listenrs
+// sharing container listeners
 copyURLBtn.addEventListener("click", () => {
   fileURL.select();
   document.execCommand("copy");
@@ -78,8 +72,6 @@ fileURL.addEventListener("click", () => {
 });
 
 const uploadFile = () => {
-  console.log("file added uploading");
-
   files = fileInput.files;
   const formData = new FormData();
   formData.append("myfile", files[0]);
@@ -92,7 +84,6 @@ const uploadFile = () => {
 
   // listen for upload progress
   xhr.upload.onprogress = function (event) {
-    // find the percentage of uploaded
     let percent = Math.round((100 * event.loaded) / event.total);
     progressPercent.innerText = percent;
     const scaleX = `scaleX(${percent / 100})`;
@@ -127,7 +118,6 @@ const onFileUploadSuccess = (res) => {
   progressContainer.style.display = "none"; // hide the box
 
   const { file: url } = JSON.parse(res);
-  console.log(url);
   sharingContainer.style.display = "block";
   fileURL.value = url;
 };
@@ -146,7 +136,7 @@ emailForm.addEventListener("submit", (e) => {
     emailTo: emailForm.elements["to-email"].value,
     emailFrom: emailForm.elements["from-email"].value,
   };
-  console.log(formData);
+
   fetch(emailURL, {
     method: "POST",
     headers: {
